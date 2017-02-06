@@ -5,11 +5,11 @@ from sklearn.preprocessing import OneHotEncoder
 
 #DELETED_LABELS = ["HRHHID", "HRMONTH", "HRYEAR4", "HURESPLI", "HUFINAL", "HEPHONEO", "HUTYPEA", "HUTYPB", "HUTYPC", "HRINTSTA", "HRMIS", "HRHHID2", "HUBUSL1", "HUBUSL2", "HUBUSL3", "HUBUSL4", "PROLDRRP", "PEPARENT", "PESPOUSE", "PULINENO", "PUBUS1", "PUBUS2OT", "PUBUSCK1"]
 
-USED_LABELS = ["HUFAMINC", "PEAGE", "PTDTRACE", "PESEX"]
+USED_LABELS = ["PEAGE", "PESEX"]
 
-NUMERICAL_LABELS = ["PEAGE", "PRINUSYR", "HUFAMINC"]
+NUMERICAL_LABELS = ["PEAGE"]
 
-CATEGORICAL_LABELS = ["PTDTRACE", "PESEX"]
+CATEGORICAL_LABELS = ["PESEX"]
 
 
 def transform_data(X_in, labels):
@@ -44,16 +44,19 @@ def transform_data(X_in, labels):
                     remap_dict[X[i]] = len(remap_dict)
             for X in X_in:
                 X[i] = remap_dict[X[i]]
+        '''
+        elif i in categorical_indices:
+            for X in X_in:
+                if not X[i] > 0:
+                    X[i] = 0
+        '''
 
 
 
-
-    print categorical_indices
-    enc = OneHotEncoder(categorical_features=categorical_indices)
-    enc.fit(X_in)
-
-
-    X_in = enc.transform(X_in).toarray()
+    if len(CATEGORICAL_LABELS) > 0:
+        enc = OneHotEncoder(categorical_features=categorical_indices)
+        enc.fit(X_in)
+        X_in = enc.transform(X_in).toarray()
 
     print len(X_in[0])
 

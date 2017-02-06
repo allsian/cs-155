@@ -12,7 +12,7 @@ def error(expected, actual):
 
 X_train, y_train, X_val, y_test, X_test = format_data.get_formatted_data()
 
-for i in range(1, 10):
+for i in range(50, 51):
     clf = ensemble.RandomForestClassifier(n_estimators=50, max_features=None, min_samples_leaf=i)
     clf.fit(X_train, y_train)
 
@@ -26,5 +26,5 @@ for i in range(1, 10):
         for idx, prediction in enumerate(test_results):
             writer.writerow([idx, prediction + 1])
     print 'stats for i = %d:' % i
-    print ein
-    print eout
+    print 1 - ein
+    print 1 - eout
