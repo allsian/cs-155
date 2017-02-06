@@ -3,4 +3,4 @@ import sklearn_classifier
 
 
 clf = tree.DecisionTreeClassifier()
-sklearn_classifier.classify(clf, 'decision-tree.csv')
+sklearn_classifier.classify(clf, 'decision-tree/decision-tree')
