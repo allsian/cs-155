@@ -8,7 +8,9 @@ from sklearn.preprocessing import OneHotEncoder
 USED_LABELS = ["HUFAMINC", "PEAGE", "PTDTRACE", "PESEX"]
 
 NUMERICAL_LABELS = ["PEAGE", "PRINUSYR", "HUFAMINC"]
+
 CATEGORICAL_LABELS = ["PTDTRACE", "PESEX"]
+
 
 def transform_data(X_in, labels):
     deleted_indices = []
@@ -100,10 +102,10 @@ def get_formatted_data():
 
 
         # Split into a training set and a test set for validation
-        X_val = X_train[:64]
-        y_val = y_train[:64] - 1
+        X_val = X_train[:6400]
+        y_val = y_train[:6400] - 1
 
-        X_train = X_train[6400:6450]
-        y_train = y_train[6400:6450] - 1
+        X_train = X_train[6400:]
+        y_train = y_train[6400:] - 1
 
     return X_train, y_train, X_val, y_val, X_test
