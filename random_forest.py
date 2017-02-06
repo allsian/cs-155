@@ -22,6 +22,7 @@ for i in range(1, 10):
 
     with open('random-forest-%d.csv' % i, 'wb') as csvfile:
         writer = csv.writer(csvfile, delimiter=',', quotechar='"')
+        writer.writerow(['id', 'PES1'])
         for idx, prediction in enumerate(test_results):
             writer.writerow([idx, prediction + 1])
     print 'stats for i = %d:' % i
