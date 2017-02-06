@@ -19,7 +19,7 @@ def classify(clf, clf_string):
     ein = error(y_train, clf.predict(X_train))
     test_results = clf.predict(X_test)
 
-    with open('%s.csv' % clf_string, 'wb') as csvfile:
+    with open('output/%s.csv' % clf_string, 'wb') as csvfile:
         writer = csv.writer(csvfile, delimiter=',', quotechar='"')
         writer.writerow(['id', 'PES1'])
         for idx, prediction in enumerate(test_results):
