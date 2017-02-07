@@ -44,12 +44,12 @@ def transform_data(X_in, labels):
                     remap_dict[X[i]] = len(remap_dict)
             for X in X_in:
                 X[i] = remap_dict[X[i]]
-        '''
-        elif i in categorical_indices:
+
+        elif i in numerical_indices:
             for X in X_in:
                 if not X[i] > 0:
                     X[i] = 0
-        '''
+
 
 
 
