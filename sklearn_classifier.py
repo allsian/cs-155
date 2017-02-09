@@ -1,6 +1,10 @@
 import format_data
 import csv
 from sklearn import ensemble
+from sklearn.model_selection import KFold
+from sklearn.model_selection import cross_val_score
+
+
 
 def error(expected, actual):
     count = 0
@@ -11,7 +15,7 @@ def error(expected, actual):
     return float(count) / len(expected)
 
 def classify(clf, clf_string):
-    X_train, y_train, X_val, y_test, X_test = format_data.get_formatted_data()
+    X_train, y_train, X_val, y_val, X_test = format_data.get_formatted_data()
 
     clf.fit(X_train, y_train)
 
@@ -27,3 +31,11 @@ def classify(clf, clf_string):
     print 'stats for %s:' % clf_string
     print 'ein', 1 - ein
     print 'eout', 1 - eout
+
+
+def kfold_classify(clf, clf_string):
+    X_train, y_train = format_data.get_unsplit_data()
+
+
+    scores = cross_val_score(clf, X_train, y_train, cv=5)
+    print scores

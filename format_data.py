@@ -2,14 +2,16 @@ import csv
 import random
 import numpy as np
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.feature_selection import SelectKBest
 
 #DELETED_LABELS = ["HRHHID", "HRMONTH", "HRYEAR4", "HURESPLI", "HUFINAL", "HEPHONEO", "HUTYPEA", "HUTYPB", "HUTYPC", "HRINTSTA", "HRMIS", "HRHHID2", "HUBUSL1", "HUBUSL2", "HUBUSL3", "HUBUSL4", "PROLDRRP", "PEPARENT", "PESPOUSE", "PULINENO", "PUBUS1", "PUBUS2OT", "PUBUSCK1"]
 
-USED_LABELS = ["PEAGE", "HUFAMINC"]
 
-NUMERICAL_LABELS = ["PEAGE", "HUFAMINC"]
+NUMERICAL_LABELS = ["PEAGE", "HUFAMINC", "PEEDUCA", "GTCBSASZ"]
 
-CATEGORICAL_LABELS = []
+CATEGORICAL_LABELS = ["PESEX", "PTDTRACE", "GTMETSTA"]
+
+USED_LABELS = NUMERICAL_LABELS + CATEGORICAL_LABELS
 
 
 def transform_data(X_in, labels):
@@ -112,3 +114,37 @@ def get_formatted_data():
         y_train = y_train[6400:] - 1
 
     return X_train, y_train, X_val, y_val, X_test
+
+
+
+def get_unsplit_data():
+    with open('train_2008.csv', 'r') as dest_f:
+
+        data_iter = csv.reader(dest_f, delimiter = ",", quotechar = '"')
+        data = [data for data in data_iter]
+
+        # print data[0]
+        # print data[1]
+        # print data[2]
+
+
+
+        labels = data[0]
+        data = data[1:]
+
+        random.shuffle(data)
+
+
+        X_train = np.array([map(int, datum[:-1]) for datum in data])
+        y_train = np.array([int(datum[-1]) for datum in data])
+
+        X_test = np.array(get_test_data())
+        X_combined = np.concatenate((X_train, X_test), axis=0)
+
+        X_combined = transform_data(X_combined, labels)
+        X_train = X_combined[:len(X_train)]
+        X_test = X_combined[len(X_train):]
+
+
+
+    return X_train, y_train

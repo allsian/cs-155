@@ -39,8 +39,21 @@ print X_train.shape
 
 ## Create your own model here given the constraints in the problem
 model = Sequential()
-model.add(Dense(100, input_shape=(len(X_train[0]),)))
-model.add(Activation('relu'))
+model.add(Dense(1000, input_shape=(len(X_train[0]),)))
+model.add(Activation('sigmoid'))
+
+model.add(Dense(400))
+model.add(Activation('sigmoid'))
+
+model.add(Dense(300))
+model.add(Activation('sigmoid'))
+
+model.add(Dense(200))
+model.add(Activation('sigmoid'))
+
+model.add(Dense(100))
+model.add(Activation('sigmoid'))
+
 ## We use one-hot encoding, we now put 10 on our output layer
 model.add(Dense(2))
 model.add(Activation('softmax'))
