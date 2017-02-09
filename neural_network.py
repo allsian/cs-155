@@ -40,7 +40,7 @@ print X_train.shape
 ## Create your own model here given the constraints in the problem
 model = Sequential()
 model.add(Dense(1000, input_shape=(len(X_train[0]),)))
-<<<<<<< Updated upstream
+
 model.add(Activation('sigmoid'))
 
 model.add(Dense(400))

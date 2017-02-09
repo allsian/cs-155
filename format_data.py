@@ -54,7 +54,7 @@ def transform_data(X_train, X_test, y_train, labels):
     '''
     print 'selecting k best'
     kbest = SelectKBest(k=30)
-    X_train = kbest.fit_and_transform(X_train, y_train)
+    X_train = kbest.fit_transform(X_train, y_train)
     indices = kbest.get_support(indices=True)
     for index in indices:
         print labels[index]
@@ -77,7 +77,7 @@ def transform_data(X_train, X_test, y_train, labels):
     #X_in = ipca.fit_transform(X_in)
     #print 'done with pca'
     '''
-    exit()
+
     return X_train, X_test
 
 def get_test_data():
@@ -145,13 +145,8 @@ def get_unsplit_data():
 
         X_train = np.array([map(int, datum[:-1]) for datum in data])
         y_train = np.array([int(datum[-1]) for datum in data])
-
         X_test = np.array(get_test_data())
-        X_combined = np.concatenate((X_train, X_test), axis=0)
-
-        X_combined = transform_data(X_combined, labels)
-        X_train = X_combined[:len(X_train)]
-        X_test = X_combined[len(X_train):]
+        X_train, X_test = transform_data(X_train, X_test, y_train, labels)
 
 
 
