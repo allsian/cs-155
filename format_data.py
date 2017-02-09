@@ -56,8 +56,6 @@ def transform_data(X_train, X_test, y_train, labels):
     kbest = SelectKBest(k=30)
     X_train = kbest.fit_transform(X_train, y_train)
     indices = kbest.get_support(indices=True)
-    for index in indices:
-        print labels[index]
 
     X_test = kbest.transform(X_test)
     '''
