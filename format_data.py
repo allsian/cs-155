@@ -53,7 +53,7 @@ def transform_data(X_train, X_test, y_train, labels):
                     X[i] = 0
     '''
     print 'selecting k best'
-    kbest = SelectKBest(k=30)
+    kbest = SelectKBest(k=200)
     X_train = kbest.fit_transform(X_train, y_train)
     indices = kbest.get_support(indices=True)
 
@@ -116,9 +116,9 @@ def get_formatted_data():
         X_val = X_train[:6400]
         y_val = y_train[:6400] - 1
 
-        X_train = X_train[6400:]
-        y_train = y_train[6400:] - 1
-
+        #X_train = X_train[6400:]
+        #y_train = y_train[6400:] - 1
+        y_train = y_train - 1
     return X_train, y_train, X_val, y_val, X_test
 
 
