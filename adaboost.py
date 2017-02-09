@@ -1,4 +1,5 @@
 from sklearn import ensemble
+from sklearn import tree
 import sklearn_classifier
 
 for i in range(25, 1500, 25):
