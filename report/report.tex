@@ -51,16 +51,17 @@
     \item \boldline{Models and techniques tried}
     \begin{itemize}
     % Insert text here. Bullet points can be made using '\item'. Models and techniques should be bolded using '\textbf{}'.
-    \item \textbf{SVM:} Bullet text.
-    \item \textbf{Random Forest/Decision Trees:} Bullet text.
-    \item \textbf{Neural Networks:} Bullet text.
-    \item \textbf{Adaboost:} Bullet text.
-    \item \textbf{Logistic Regression:} Bullet text.
-    \item \textbf{Linear Regression:} Bullet text.
-    \item \textbf{Gradient Regression:} Bullet text.
-    \item \textbf{One Hot Encoding:} Bullet text.
-    \item \textbf{KBest feature selection:} Bullet text.
-    \item \textbf{Cross validation:} Bullet text.
+    \item \textbf{Cross validation:} We employed cross validation to analyze the performance of our classifiers.
+    \item \textbf{One Hot Encoding:} One of the first techniques we considered was one-hot encoding for certain inputs. Since some important factors, such as race or marital status, didn't have any numerical meaning, we chose from the beginning to one-hot encode inputs like this.
+    \item \textbf{Neural Networks:} One of our first ideas was to train a neural network on the input features. We tried several structures, including a shallow variant with a single hidden layer with 10000 nodes, and a deep variant with five layers having 100-1000 nodes. However, we found these models only were accurate with about 74\% probability.
+    \item \textbf{SVM:} One of the techniques we considered was training an SVM on the data, since we expected the output to be somewhat linear in the inputs. However, this was too computationally expensive - the sklearn library took too long to train on the given dataset, so we did not get any model from this classifier.
+    \item \textbf{Random Forest/Decision Trees:} We tried decision trees, and then random forest classifiers from  the sklearn library. These classifiers resulted in scores of around 75-76\%.
+    \item \textbf{Adaboost:} We used the adaboost technique through the sklearn AdaBoostClassifier (the default model, which we used, was the random forest model) This increased our scores to around 76\%
+    \item \textbf{Logistic Regression:} We tried the logistic regression classifier from sklearn. This resulted in low scores (around 73\% out of sample), so we decided to avoid this model.
+    \item \textbf{Linear Regression:} We tried the linear regression classifier from sklearn. This also resulted in low scores (around 73\% out of sample), so we decided to avoid this model as well.
+    \item \textbf{Gradient Regression:} %TODO what is this and how did it turn out?
+    \item \textbf{KBest feature selection:} We tried the scikit SelectKBest method, which transforms the input to remove all but the $k$ best features in terms of univariate statistical dependency of the output on those features. Coupled with the Adaboost classifier, this technique got our scores up to around 77-78\%.
+
 
     \end{itemize}
 
