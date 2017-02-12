@@ -53,7 +53,7 @@ def transform_data(X_train, X_test, y_train, labels):
                     X[i] = 0
     '''
     print 'selecting k best'
-    kbest = SelectKBest(k=200)
+    kbest = SelectKBest(k=250)
     X_train = kbest.fit_transform(X_train, y_train)
     indices = kbest.get_support(indices=True)
 
@@ -79,7 +79,7 @@ def transform_data(X_train, X_test, y_train, labels):
     return X_train, X_test
 
 def get_test_data():
-    with open('test_2008.csv', 'r') as dest_f:
+    with open('test_2012.csv', 'r') as dest_f:
         data_iter = csv.reader(dest_f, delimiter = ",", quotechar = '"')
         data = [data for data in data_iter]
         data = data[1:] # get rid of labels
