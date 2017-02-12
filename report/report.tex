@@ -60,7 +60,7 @@
     \item \textbf{Logistic Regression:} We tried the logistic regression classifier from sklearn. This resulted in low scores (around 73\% out of sample), so we decided to avoid this model.
     \item \textbf{Linear Regression:} We tried the linear regression classifier from sklearn. This also resulted in low scores (around 73\% out of sample), so we decided to avoid this model as well.
     \item \textbf{Gradient Regression:} %TODO what is this and how did it turn out?
-    \item \textbf{KBest feature selection:} We tried the scikit SelectKBest method, which transforms the input to remove all but the $k$ best features in terms of univariate statistical dependency of the output on those features. Coupled with the Adaboost classifier, this technique got our scores up to around 77-78\%.
+    \item \textbf{$k$-Best feature selection:} We tried the scikit SelectKBest method, which transforms the input to remove all but the $k$ best features in terms of univariate statistical dependency of the output on those features. Coupled with the Adaboost classifier, this technique got our scores up to around 77-78\%.
 
 
     \end{itemize}
@@ -68,10 +68,10 @@
     \item \boldline{Work timeline}
     \begin{itemize}
     % Insert text here. Bullet points can be made using '\item'.
-    \item \textbf{Preprocessing framework:} Bullet text.
-    \item \textbf{Initial model exploration:} Bullet text.
-    \item \textbf{Dataset manipulation:} Bullet text.
-    \item \textbf{Parameter tuning:} Bullet text.
+    \item \textbf{First Half of first week: Preprocessing/Framework} During this time, we built a framework that would one-hot encode some inputs, and created methods that would allow us to analyze the performance of an arbitrary classifier from the sklearn libraries, and output the results on the competition test data.
+    \item \textbf{Second Half of first week: Initial model exploration} During this time, we came up with several different classifiers that we had learned about in class and that were implemented by sklearn. We created files for each of these, tested their performance, and made some initial submissions to the leaderboard.
+    \item \textbf{First Half of second week: Dataset manipulation} During this time we used the framework we had built the previous week to manipulate the inputs to the models to get better results. We made a breakthrough in applying the $k$-Best feature selection to prevent overfitting and make the models more accurate.
+    \item \textbf{Second Half of second week: Parameter tuning} During this time, we took our best models and analyzed their performance as we varied their input parameters, to hone in on the best possible classifier we could produce.
     \end{itemize}
 
 \end{itemize}
