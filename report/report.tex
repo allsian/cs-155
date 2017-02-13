@@ -52,7 +52,7 @@
     \begin{itemize}
     % Insert text here. Bullet points can be made using '\item'. Models and techniques should be bolded using '\textbf{}'.
     \item \textbf{Cross validation:} We employed cross validation to analyze the performance of our classifiers.
-    \item \textbf{One Hot Encoding:} One of the first techniques we considered was one-hot encoding for certain inputs. Since some important factors, such as race or marital status, didn't have any numerical meaning, we chose from the beginning to one-hot encode inputs like this.
+    \item \textbf{One-Hot Encoding:} One of the first techniques we considered was one-hot encoding for certain inputs. Since some important factors, such as race or marital status, didn't have any numerical meaning, we chose from the beginning to one-hot encode inputs like this.
     \item \textbf{Neural Networks:} One of our first ideas was to train a neural network on the input features. We tried several structures, including a shallow variant with a single hidden layer with 10000 nodes, and a deep variant with five layers having 100-1000 nodes. However, we found these models only were accurate with about 74\% probability.
     \item \textbf{SVM:} One of the techniques we considered was training an SVM on the data, since we expected the output to be somewhat linear in the inputs. However, this was too computationally expensive - the sklearn library took too long to train on the given dataset, so we did not get any model from this classifier.
     \item \textbf{Random Forest/Decision Trees:} We tried decision trees, and then random forest classifiers from  the sklearn library. These classifiers resulted in scores of around 75-76\%.
@@ -85,13 +85,18 @@
     \item \boldline{Data processing and manipulation}
     \begin{itemize}
     % Insert text here. Bullet points can be made using '\item'.
-    \item \textbf{Bullet:} Bullet text.
+    \item \textbf{$k$-Best features:}
+    We chose to select which features we would use by taking the 250 best features according to their statistical relevance to the voter turnout. We felt that this would be enough to weed out any irrelevant data (such as the survey date or reasons for non-interview) while still keeping most the important factors, such as age and income level.
+
+    \item \textbf{One-Hot Encoding:}
+    We chose to One-Hot encode certain important features in the input data. Features that we did this for were "PESEX" (sex), "PTDTRACE" (race), and "GTMETSTA" (metropolitan status), since we felt that these features didn't conform to any intuitive enumeration.
+
     \end{itemize}
 
     \item \boldline{Details of models and techniques}
     \begin{itemize}
     % Insert text here. Bullet points can be made using '\item'.
-    \item \textbf{Bullet:} Bullet text.
+    \item \textbf{Adaboost:} We used an Adaboost classifier with
 
     % If you would like to insert a figure, you can just use the following five lines, replacing the image path with your own and the caption with a 1-2 sentence description of what the image is and how it is relevant or useful.
     % \begin{figure}[H]
