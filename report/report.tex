@@ -96,7 +96,7 @@
     \item \boldline{Details of models and techniques}
     \begin{itemize}
     % Insert text here. Bullet points can be made using '\item'.
-    \item \textbf{Adaboost:} We used an Adaboost classifier with
+    \item \textbf{Adaboost:} We used an Adaboost classifier with %TODO
 
     % If you would like to insert a figure, you can just use the following five lines, replacing the image path with your own and the caption with a 1-2 sentence description of what the image is and how it is relevant or useful.
     % \begin{figure}[H]
@@ -116,10 +116,10 @@
 \begin{itemize}
 
     \item \boldline{Scoring} \\
-    % Insert text here.
+    % Insert text here.%TODO
 
     \item \boldline{Validation and Test} \\
-    % Insert text here.
+    % Insert text here.%TODO
 
 \end{itemize}
 
@@ -130,13 +130,13 @@
 \begin{itemize}
 
     \item \boldline{Discoveries} \\
-    % Insert text here.
+    We discovered that, for datasets with a large number of inputs, many of which are irrelevant to the output class, simplifying the input data through a $k$-Best method or some other method that culls useless features can be very helpful to making models behave better. We also learned that random forest classifiers, especially when boosted, can be effective when analyzing polling data.
 
     \item \boldline{Challenges} \\
-    % Insert text here.
+    We found that many common classifiers, such as neural networks and SVMs, were ineffective at predicting the voter turnout. We found that it was hard to put the data in an inuitive form to analyze, due to there being a large number of features, some of which were poorly explained in the codebook. We also found that many learning algorithms can be computationally expensive, and so it can take a great deal of time to run through different parameters on algorithms to find the best model.
 
     \item \boldline{Concluding Remarks} \\
-    % Insert text here.
+    In the end, our model was successful in correctly classifying over 78\% of the test data. This is something of an underwhelming result, due to the fact that in the training data, 74.5\% of the people surveyed voted, and so even an extremely naive classifier which always predicted that people would vote would probably successfully classify about 75\% of the data. However, since no one in the class was able to get above 79\% on the public leaderboard, we believe that there may not be enough data in the survey to predict to a high degree of accuracy whether someone will vote or not. There are clearly factors at play, such as a person's availability on voting day, which are impossible to predict and which affect turnout. Therefore, we believe that getting a 78\% classification rate from the data we were given constitutes a success.
 
 \end{itemize}
 
