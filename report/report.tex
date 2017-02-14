@@ -51,16 +51,18 @@
     \item \boldline{Models and techniques tried}
     \begin{itemize}
     % Insert text here. Bullet points can be made using '\item'. Models and techniques should be bolded using '\textbf{}'.
-    \item \textbf{Cross validation:} We employed cross validation to analyze the performance of our classifiers.
-    \item \textbf{One-Hot Encoding:} One of the first techniques we considered was one-hot encoding for certain inputs. Since some important factors, such as race or marital status, didn't have any numerical meaning, we chose from the beginning to one-hot encode inputs like this.
-    \item \textbf{Neural Networks:} One of our first ideas was to train a neural network on the input features. We tried several structures, including a shallow variant with a single hidden layer with 10000 nodes, and a deep variant with five layers having 100-1000 nodes. However, we found these models only were accurate with about 74\% probability.
-    \item \textbf{SVM:} One of the techniques we considered was training an SVM on the data, since we expected the output to be somewhat linear in the inputs. However, this was too computationally expensive - the sklearn library took too long to train on the given dataset, so we did not get any model from this classifier.
+    \item \textbf{One-Hot Encoding:} One of the first techniques for training data manipulation that we considered was one-hot encoding for categorical features. Since some important factors, such as race or marital status, didn't have any numerical meaning, we experimented with instead one hot-encoding these features to provide more meaningful inputs to our learning models.
+    \item \textbf{Principle Component Analysis:} asdf
+     \item \textbf{$k$-Best Feature Selection:} We tried the scikit SelectKBest method, which transforms the input to remove all but the $k$ best features in terms of univariate statistical dependency of the output on those features. Coupled with the Adaboost classifier, this technique got our scores up to around 77-78\%.
+     \item \textbf{Cross validation:} We employed 5-fold cross validation to analyze the performance of our classifiers. If we wanted to tune a particular parameter we would fix a model and all of its other parameters, then vary the final parameter, picking the value with the lowest average validation error to be our final parameter value. 
+    \item \textbf{Neural Networks:} One of our first ideas was to train a neural network on the input features. We tried several structures, including a shallow variant with a single hidden layer with 10000 nodes, and a deep variant with five layers having 100-1000 nodes. However, we found these models were only accurate with about 74\% probability regardless of the transformations we performed on the input data, so we gave up on this model pretty quickly. 
+    \item \textbf{SVM:} SVMs are popular classification models and were one of the first we tried, but the model turned out to be too computationally expensive to be practical. The sklearn SVC implementation is quadratic in the number of input samples, so with tens of thousands of training points each iteration was taking about 30 minutes to run on our machines (and we were only getting about 75 percent accuracy).
     \item \textbf{Random Forest/Decision Trees:} We tried decision trees, and then random forest classifiers from  the sklearn library. These classifiers resulted in scores of around 75-76\%.
     \item \textbf{Adaboost:} We used the adaboost technique through the sklearn AdaBoostClassifier (the default model, which we used, was the random forest model) This increased our scores to around 76\%
     \item \textbf{Logistic Regression:} We tried the logistic regression classifier from sklearn. This resulted in low scores (around 73\% out of sample), so we decided to avoid this model.
     \item \textbf{Linear Regression:} We tried the linear regression classifier from sklearn. This also resulted in low scores (around 73\% out of sample), so we decided to avoid this model as well.
-    \item \textbf{Gradient Regression:} %TODO what is this and how did it turn out?
-    \item \textbf{$k$-Best feature selection:} We tried the scikit SelectKBest method, which transforms the input to remove all but the $k$ best features in terms of univariate statistical dependency of the output on those features. Coupled with the Adaboost classifier, this technique got our scores up to around 77-78\%.
+    \item \textbf{Gradient Boosting:} After the success of AdaBoost, it seemed like boosting classifiers in general were successful in classifying the data, so we turned to Gradient Boosting. This model ended up performing the best out of all the models we tried when combined with $k$-best feature selection. 
+   
 
 
     \end{itemize}
@@ -68,10 +70,10 @@
     \item \boldline{Work timeline}
     \begin{itemize}
     % Insert text here. Bullet points can be made using '\item'.
-    \item \textbf{First Half of first week: Preprocessing/Framework} During this time, we built a framework that would one-hot encode some inputs, and created methods that would allow us to analyze the performance of an arbitrary classifier from the sklearn libraries, and output the results on the competition test data.
-    \item \textbf{Second Half of first week: Initial model exploration} During this time, we came up with several different classifiers that we had learned about in class and that were implemented by sklearn. We created files for each of these, tested their performance, and made some initial submissions to the leaderboard.
-    \item \textbf{First Half of second week: Dataset manipulation} During this time we used the framework we had built the previous week to manipulate the inputs to the models to get better results. We made a breakthrough in applying the $k$-Best feature selection to prevent overfitting and make the models more accurate.
-    \item \textbf{Second Half of second week: Parameter tuning} During this time, we took our best models and analyzed their performance as we varied their input parameters, to hone in on the best possible classifier we could produce.
+    \item \textbf{Day 1: Preprocessing/Framework} During this time, we built up an input transformation framework that enabled us to specify which feature to include/exclude, as well as which features we wanted to one-hot encode. We also built an abstract classifier analysis framework that used cross-validation to measure the performance of any sklearn classifier. 
+    \item \textbf{Day 2: Initial model exploration} During this time, we experimented with several different classifiers that we had learned about in class. We implemented these, tested their performance with mostly the default parameter set, and made some initial submissions to the leaderboard.
+    \item \textbf{Day 3-4: Dataset manipulation} None of the models we tried initially seemed very promising compared to the scores that other teams were achieving on the leaderboard, so we concentrated on transforming our input data into something more useful to the models. We made a breakthrough in applying the $k$-Best feature selection to reduce the amount of noise in the training data.
+    \item \textbf{Day 5-6: Parameter tuning} At this point our best performing models were AdaBoost and random forest classifiers, so we tuned the parameters on these models and made minor modifications to our input transformations to eke the last fractional percentage improvements. We had a very late breakthrough in trying gradient boosting, which ended up being our best performing model on the public leaderboard. 
     \end{itemize}
 
 \end{itemize}
@@ -85,18 +87,42 @@
     \item \boldline{Data processing and manipulation}
     \begin{itemize}
     % Insert text here. Bullet points can be made using '\item'.
-    \item \textbf{$k$-Best features:}
-    We chose to select which features we would use by taking the 250 best features according to their statistical relevance to the voter turnout. We felt that this would be enough to weed out any irrelevant data (such as the survey date or reasons for non-interview) while still keeping most the important factors, such as age and income level.
+    \item Upon initially receiving the data, we read through the codebook too see what sort of questions were being asked, which would determine what features we had to work with. We came to two early conclusions: first, that many of the features were
+    categorical in nature, rather than numeric, so using one-hot encoding to transform at least some of the features would be necessary. Second, many of the questions were noisy in the sense that they depended on answers to previous questions, or didn't apply to the majority of respondents. We would either need to filter out these noisy inputs in a preprocessing step or choose a model that would be able to recognize their lack of relevance and assign them a negligible weight.
 
-    \item \textbf{One-Hot Encoding:}
-    We chose to One-Hot encode certain important features in the input data. Features that we did this for were "PESEX" (sex), "PTDTRACE" (race), and "GTMETSTA" (metropolitan status), since we felt that these features didn't conform to any intuitive enumeration.
+    \item Our first step was to implement One-Hot Encoding, which we did using sklearn's OneHotEncoding library. However,
+    this left us with tens of thousands of features, and for some features like income level it didn't make sense to use
+    one-hot encoding because there was an actual numerical trend between different input values. We debated going through every
+    feature in the data set and classifying them as either categorical or numeric, but this didn't seem like an efficient use of resources.
+
+    \item Instead we decided to handpick a few features that we thought would strongly correlate with voter turnout. From taking Jonathan Katz's election theory class we knew that age, race, income, and gender were all correlated with voter turnout,
+    so we threw out every label except HUFAMINC, PEAGE, PTDTRACE, and PESEX.
+
+    \item This approach actually worked pretty well and we were getting classification accuracy in the 76 percent range for
+    several different models, which was an improvement from using all the features. However we noticed when modelling that
+    our in sample accuracy was always in the 76-77 percent range, which suggested that 5 features was just too few to be 
+    accurately the tens of thousands of data points that we had. We needed more features to curb our oversimplification of the
+    data.
+
+    \item At this point we started exploring alternate strategies for preprocessing the data. We tried Principle Component
+    Analysis, which aims to find correlation between features to simplify the dataset without losing relevant information. However whenever trying to simplify to a reasonable number of features we would consistently achieve high in sample but
+    terrible out of sample error, which suggested that we we oversimplifying the data.
+
+    \item Next we trawled through the different classes in sklearn's feature selection module. Of the ones we saw SelectKBest
+    seemed the most promising, since this lined up with the conventional political science wisdom that there were a small number
+    of features which were highly correlated with voter turnout. And indeed when we ran this for the first time we observed
+    that three of the 5 best features were the ones we mentioned above. To get more data to work with we expanded to 30 best
+    features instead of 5. Rerunning our previous classifiers with this new input set immediately improved our classification
+    performance by a full percent, which was the most significant jump we saw throughout the entire training process.
 
     \end{itemize}
 
     \item \boldline{Details of models and techniques}
     \begin{itemize}
-    % Insert text here. Bullet points can be made using '\item'.
-    \item \textbf{Adaboost:} We used an Adaboost classifier with %TODO
+
+    \item Because the feature space was some complex and noisy, we didn't really have a good initial intuition of what an appropriate model choice would be for this problem, so we started the process by just trying a lot of models on the unmodified data and seeing which ones performed best. The list of models is long: Neural Networks, Linear and Logistic Regression, SVMs, Decision Trees, Random Forests, AdaBoost, and Gradient Boosting.
+
+    \item After trying a bunch of these models with varying parameters the ones that stood out were random forests and AdaBoost. They were both performing in the 76 percentage classification accuracy range while none of the other models were above 75. 
 
     % If you would like to insert a figure, you can just use the following five lines, replacing the image path with your own and the caption with a 1-2 sentence description of what the image is and how it is relevant or useful.
     % \begin{figure}[H]
@@ -116,10 +142,20 @@
 \begin{itemize}
 
     \item \boldline{Scoring} \\
-    % Insert text here.%TODO
+    We used 5-fold cross-validation to generate a validation set and took the
+    average of those 5 validation error numbers to be our score for that model. 
 
     \item \boldline{Validation and Test} \\
-    % Insert text here.%TODO
+    As mentioned above we used 5-fold cross-validation, specifically sklearn's
+    cross\_val\_score module. This module partitions the data into 5 validation
+    sets and takes the remaining four-fifths of the dataset as the training set.
+    To choose our final models we simply picked the two that performed best on the
+    leaderboard. In the end, our two best models were gradient boost with 700 estimators
+    and adaboost with 400 estimators. We didn't change any other parameters from the
+    default on these two models. The only manipulation we made to our data was to
+    choose the 165 ``best'' features according to the SelectKBest module, which
+    looks at correlation between an individual feature and the output.  
+
 
 \end{itemize}
 
@@ -130,7 +166,7 @@
 \begin{itemize}
 
     \item \boldline{Discoveries} \\
-    We discovered that, for datasets with a large number of inputs, many of which are irrelevant to the output class, simplifying the input data through a $k$-Best method or some other method that culls useless features can be very helpful to making models behave better. We also learned that random forest classifiers, especially when boosted, can be effective when analyzing polling data.
+    We discovered that, for datasets with a large number of inputs, many of which are irrelevant to the output class, simplifying the input data through a $k$-Best method or some other method that culls useless features can be very helpful to making models behave better. We also learned that decision tree classifiers, especially when boosted, can be effective when analyzing polling data.
 
     \item \boldline{Challenges} \\
     We found that many common classifiers, such as neural networks and SVMs, were ineffective at predicting the voter turnout. We found that it was hard to put the data in an inuitive form to analyze, due to there being a large number of features, some of which were poorly explained in the codebook. We also found that many learning algorithms can be computationally expensive, and so it can take a great deal of time to run through different parameters on algorithms to find the best model.
