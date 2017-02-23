@@ -34,6 +34,9 @@ def get_number_syllables_in_pronunciation(pronounciation):
 
 def rhymes_with(word1, word2):
 
+    if word1 == word2:
+        return False
+
     if word1 not in pronounce_dict or word2 not in pronounce_dict:
         return False
 
