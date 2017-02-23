@@ -26,9 +26,61 @@ ints_list = map(lambda line: map(lambda word: word_to_int_map[word], line), line
 model = HMM.unsupervised_HMM(ints_list, 18, 10)
 
 
-for i in range(14):
-    ints_generated = model.generate_sonnet_line(int_to_word_map)
 
-    new_sonnet = map(lambda integer: int_to_word_map[integer], ints_generated)
 
-    print ' '.join(new_sonnet)
+
+f = open('progressions/lines_rhyming', 'w')
+
+
+ints_pairs = [model.generate_sonnet_line_pair(int_to_word_map) for _ in range(7)]
+
+
+
+
+
+new_line = map(lambda integer: int_to_word_map[integer], ints_pairs[0][0]) + ['\n']
+f.write(' '.join(new_line))
+
+new_line = map(lambda integer: int_to_word_map[integer], ints_pairs[1][0]) + ['\n']
+f.write(' '.join(new_line))
+
+new_line = map(lambda integer: int_to_word_map[integer], ints_pairs[0][1]) + ['\n']
+f.write(' '.join(new_line))
+
+new_line = map(lambda integer: int_to_word_map[integer], ints_pairs[1][1]) + ['\n']
+f.write(' '.join(new_line))
+
+new_line = map(lambda integer: int_to_word_map[integer], ints_pairs[2][0]) + ['\n']
+f.write(' '.join(new_line))
+
+new_line = map(lambda integer: int_to_word_map[integer], ints_pairs[3][0]) + ['\n']
+f.write(' '.join(new_line))
+
+new_line = map(lambda integer: int_to_word_map[integer], ints_pairs[2][1]) + ['\n']
+f.write(' '.join(new_line))
+
+new_line = map(lambda integer: int_to_word_map[integer], ints_pairs[3][1]) + ['\n']
+f.write(' '.join(new_line))
+
+new_line = map(lambda integer: int_to_word_map[integer], ints_pairs[4][0]) + ['\n']
+f.write(' '.join(new_line))
+
+new_line = map(lambda integer: int_to_word_map[integer], ints_pairs[5][0]) + ['\n']
+f.write(' '.join(new_line))
+
+new_line = map(lambda integer: int_to_word_map[integer], ints_pairs[4][1]) + ['\n']
+f.write(' '.join(new_line))
+
+new_line = map(lambda integer: int_to_word_map[integer], ints_pairs[5][1]) + ['\n']
+f.write(' '.join(new_line))
+
+new_line = map(lambda integer: int_to_word_map[integer], ints_pairs[6][0]) + ['\n']
+f.write(' '.join(new_line))
+
+new_line = map(lambda integer: int_to_word_map[integer], ints_pairs[6][1]) + ['\n']
+f.write(' '.join(new_line))
+
+
+
+
+f.close()

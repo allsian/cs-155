@@ -339,6 +339,14 @@ class HiddenMarkovModel:
 
         return emission
 
+    def generate_sonnet_line_pair(self, int_to_word_map):
+
+        while True:
+            line1 = generate_sonnet_line(self, int_to_word_map)
+            line2 = generate_sonnet_line(self, int_to_word_map)
+
+            if word_tools.rhymes_with(int_to_word_map[line1[-1]], int_to_word_map[line1[-1]]):
+                return line1, line2
 
 
 
