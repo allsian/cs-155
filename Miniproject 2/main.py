@@ -11,16 +11,18 @@ def get_number_syllables(word):
     return len([syllable for syllable in p if syllable[-1] in '012'])
 
 
-print get_number_syllables('betrayal')
 
-sonnet_list = process_input.get_sonnet_list()
 
+line_list = process_input.get_line_list()
+
+for line in line_list:
+    print line
 
 word_to_int_map = {}
 int_to_word_map = {}
 
-for sonnet in sonnet_list:
-    for word in sonnet:
+for line in line_list:
+    for word in line:
         if word not in word_to_int_map:
             integer = len(word_to_int_map)
             word_to_int_map[word] = integer
@@ -29,7 +31,7 @@ for sonnet in sonnet_list:
 # print int_to_word_map
 # print word_to_int_map
 
-ints_list = map(lambda sonnet: map(lambda word: word_to_int_map[word], sonnet), sonnet_list)
+ints_list = map(lambda line: map(lambda word: word_to_int_map[word], line), line_list)
 
 model = HMM.unsupervised_HMM(ints_list, 18, 10)
 

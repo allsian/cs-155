@@ -1,8 +1,8 @@
 
+import string
 
 
-
-def get_sonnet_list():
+def get_line_list():
 
     f = open('project2data/shakespeare.txt', 'r')
 
@@ -13,6 +13,8 @@ def get_sonnet_list():
     word_list = []
 
     for line in f:
+
+        line = line.replace("-", " ")
 
         line_word_list = line.split(" ")
 
@@ -28,24 +30,29 @@ def get_sonnet_list():
     word_list = filter(lambda x: x != '', word_list)
 
 
-    sonnet_list = []
-    current_sonnet = []
+    line_list = []
+    current_line = []
 
     nums = set(map(str, range(1,200)))
 
     index = 0
     while index < len(word_list):
 
-        if word_list[index] in nums:
-            sonnet_list.append(current_sonnet)
-            current_sonnet = []
+        if word_list[index] in nums or word_list[index] == "\n":
+            line_list.append(current_line)
+            current_line = []
 
         else:
-            current_sonnet.append(word_list[index])
+            word = word_list[index]
+            exclude = set(string.punctuation)
+            word = ''.join(ch for ch in word if ch not in exclude)
+            word = word.lower()
+
+            current_line.append(word)
 
         index += 1
 
-    sonnet_list = sonnet_list[1:]
 
+    line_list = filter(lambda x: len(x) > 0, line_list)
 
-    return sonnet_list
+    return line_list
