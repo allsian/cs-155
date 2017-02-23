@@ -7,6 +7,7 @@
 ########################################
 
 import random
+import word_tools
 
 class HiddenMarkovModel:
     '''
@@ -299,6 +300,48 @@ class HiddenMarkovModel:
             state = next_state
 
         return emission
+
+
+    def generate_sonnet_line(self, int_to_word_map):
+
+        emission = []
+        state = random.choice(range(self.L))
+        num_syllables = 0
+
+        while num_syllables < 10:
+            # Sample next observation.
+            while True:
+                rand_var = random.uniform(0, 1)
+                next_obs = 0
+
+                while rand_var > 0:
+                    rand_var -= self.O[state][next_obs]
+                    next_obs += 1
+
+                next_obs -= 1
+                syl = word_tools.get_number_syllables(int_to_word_map[next_obs])
+                if num_syllables + syl <= 10:
+                    break
+
+            emission.append(next_obs)
+            num_syllables += syl
+
+            # Sample next state.
+            rand_var = random.uniform(0, 1)
+            next_state = 0
+
+            while rand_var > 0:
+                rand_var -= self.A[state][next_state]
+                next_state += 1
+
+            next_state -= 1
+            state = next_state
+
+        return emission
+
+
+
+
 
 def unsupervised_HMM(X, n_states, n_iters):
     '''
