@@ -304,13 +304,15 @@ class HiddenMarkovModel:
 
     def generate_sonnet_line(self, int_to_word_map):
 
-        emission = []
-        state = random.choice(range(self.L))
         num_syllables = 0
+        while num_syllables != 10:
 
-        while num_syllables < 10:
-            # Sample next observation.
-            while True:
+            emission = []
+            state = random.choice(range(self.L))
+            num_syllables = 0
+
+            while num_syllables < 10:
+
                 rand_var = random.uniform(0, 1)
                 next_obs = 0
 
@@ -320,22 +322,20 @@ class HiddenMarkovModel:
 
                 next_obs -= 1
                 syl = word_tools.get_number_syllables(int_to_word_map[next_obs])
-                if num_syllables + syl <= 10:
-                    break
 
-            emission.append(next_obs)
-            num_syllables += syl
+                emission.append(next_obs)
+                num_syllables += syl
 
-            # Sample next state.
-            rand_var = random.uniform(0, 1)
-            next_state = 0
+                # Sample next state.
+                rand_var = random.uniform(0, 1)
+                next_state = 0
 
-            while rand_var > 0:
-                rand_var -= self.A[state][next_state]
-                next_state += 1
+                while rand_var > 0:
+                    rand_var -= self.A[state][next_state]
+                    next_state += 1
 
-            next_state -= 1
-            state = next_state
+                next_state -= 1
+                state = next_state
 
         return emission
 

@@ -27,7 +27,7 @@ model = HMM.unsupervised_HMM(ints_list, 18, 10)
 
 
 for i in range(14):
-    ints_generated = model.generate_sonnet_line(120)
+    ints_generated = model.generate_sonnet_line(int_to_word_map)
 
     new_sonnet = map(lambda integer: int_to_word_map[integer], ints_generated)
 
