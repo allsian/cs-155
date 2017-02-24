@@ -311,7 +311,7 @@ class HiddenMarkovModel:
             state = random.choice(range(self.L))
             num_syllables = 0
 
-            while num_syllables < 10:
+            while len(emission) == 0 or int_to_word_map[emission[-1]] != '\n':
 
                 rand_var = random.uniform(0, 1)
                 next_obs = 0
@@ -337,16 +337,29 @@ class HiddenMarkovModel:
                 next_state -= 1
                 state = next_state
 
+                if num_syllables > 10:
+                    break
+
         return emission
 
     def generate_sonnet_line_pair(self, int_to_word_map):
 
-        while True:
-            line1 = self.generate_sonnet_line(int_to_word_map)
-            line2 = self.generate_sonnet_line(int_to_word_map)
+        lines_list = []
 
-            if word_tools.rhymes_with(int_to_word_map[line1[-1]], int_to_word_map[line2[-1]]):
-                return line1, line2
+        while True:
+
+            created_line = self.generate_sonnet_line(int_to_word_map)
+            print map(lambda integer: int_to_word_map[integer], created_line)
+
+            for old_line in lines_list:
+
+                if word_tools.rhymes_with(int_to_word_map[created_line[-2]], int_to_word_map[old_line[-2]]):
+
+                    return created_line, old_line
+
+
+
+
 
 
 

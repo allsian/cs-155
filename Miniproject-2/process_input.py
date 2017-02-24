@@ -57,6 +57,7 @@ def get_line_list_from_file(input):
 
 
     line_list = filter(lambda x: len(x) > 0, line_list)
+    line_list = map(lambda x: x + ['\n'], line_list)
 
     return line_list
 

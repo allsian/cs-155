@@ -23,7 +23,7 @@ for line in line_list:
 
 ints_list = map(lambda line: map(lambda word: word_to_int_map[word], line), line_list)
 
-model = HMM.unsupervised_HMM(ints_list, 50, 40)
+model = HMM.unsupervised_HMM(ints_list, 15, 4)
 
 
 
@@ -35,7 +35,7 @@ def generate_poem(filename):
     ints_pairs = [model.generate_sonnet_line_pair(int_to_word_map) for _ in range(7)]
 
     def int_list_to_line(ints_list):
-        words = map(lambda integer: int_to_word_map[integer], ints_list) + ['\n']
+        words = map(lambda integer: int_to_word_map[integer], ints_list)
         return ' '.join(words)
 
 
@@ -61,5 +61,5 @@ def generate_poem(filename):
 
 if __name__ == '__main__':
 
-    for i in range(0, 100):
-        generate_poem('50hiddenrhyming' + str(i))
+    for i in range(0, 10):
+        generate_poem('rhyming_with_line_end' + str(i))
