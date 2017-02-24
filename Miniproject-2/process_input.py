@@ -2,9 +2,9 @@
 import string
 
 
-def get_line_list():
+def get_line_list_from_file(input):
 
-    f = open('project2data/shakespeare.txt', 'r')
+    f = open(input, 'r')
 
 
     # List of sonnets. Each sonnet is a list of words and newline chars
@@ -13,6 +13,9 @@ def get_line_list():
     word_list = []
 
     for line in f:
+
+        if len(line) < 20:
+            continue
 
         line = line.replace("-", " ")
 
@@ -56,3 +59,10 @@ def get_line_list():
     line_list = filter(lambda x: len(x) > 0, line_list)
 
     return line_list
+
+
+
+
+def get_line_list():
+    return get_line_list_from_file('project2data/shakespeare.txt') + \
+            get_line_list_from_file('project2data/spenser.txt')
