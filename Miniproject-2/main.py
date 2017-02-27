@@ -23,7 +23,7 @@ for line in line_list:
 
 ints_list = map(lambda line: map(lambda word: word_to_int_map[word], line), line_list)
 
-model = HMM.unsupervised_HMM(ints_list, 15, 4)
+model = HMM.unsupervised_HMM(ints_list, 50, 20)
 
 
 
@@ -61,5 +61,5 @@ def generate_poem(filename):
 
 if __name__ == '__main__':
 
-    for i in range(0, 10):
+    for i in range(0, 100):
         generate_poem('rhyming_with_line_end' + str(i))
