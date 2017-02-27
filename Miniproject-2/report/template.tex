@@ -37,7 +37,7 @@
     OneHotTeam
 
     \item \boldline{Division of labour} \\
-    We discussed all the design choices together and pair coded the entire 
+    We discussed all the design choices together and pair coded the entire
     implementation.
 
     \item \boldline{Repository} \\
@@ -75,7 +75,7 @@
     which words commonly ended lines, resulting in a more faithful poem output.
 
 
-    \item \boldline{Did you have to make changes to the way you tokenized after 
+    \item \boldline{Did you have to make changes to the way you tokenized after
     the initial algorithm results?}
 
     We did. As mentioned above we went through three separate stages. In the first
@@ -182,7 +182,7 @@
     our model these became more interspersed with nouns, verbs, and adjectives
     in reasonable places. Unfortunately, our final poem submission, included
     below, is still far from understandable English, which is a testament to
-    the difficulty of the problem of modeling language. 
+    the difficulty of the problem of modeling language.
 
 \end{itemize}
 
@@ -195,19 +195,19 @@
 
     \item \boldline{Analysis of five states} \\
 
-    We chose to analyze our states in terms of metrical foot. We distinguished 5 kinds of metrical feet for words: 
+    We chose to analyze our states in terms of metrical foot. We distinguished 5 kinds of metrical feet for words:
 
     \begin{itemize}
 
     \item Words with one syllable
-    
+
     \item Words with an even number syllables starting with an iabm
-    
+
     \item Words with an odd number syllables starting with an iamb
-    
+
     \item Words with an even number syllables starting with a trochee
 
-    \item Words with an odd number syllables starting with a trochee 
+    \item Words with an odd number syllables starting with a trochee
     \end{itemize}
 
     For each of these kinds of metrical foot we found the state which had the highest total generation probability for words of that foot. We also looked at the state which most often produced a newline.
@@ -220,7 +220,7 @@
     or unstressed in the meter. For even syllable iambs we see that they almost always
     transition to another even syllable iamb or a line break, which fits in with
     iambic meter. Odd syllable iambs most commonly transition to trochees, which
-    again makes sense. Even syllable trochees tend to transition to one syllable 
+    again makes sense. Even syllable trochees tend to transition to one syllable
     words, which is fine since one syllable words can be stressed or unstressed.
     Odd syllable trochees most commonly transition to iambs, which fits the meter,
     but they also transition a fair amount to trochees, which isn't incorrect
@@ -292,10 +292,10 @@
 
     \item \boldline{Observations} \\
 
-    Multiple times throughout this process we encountered a decision point 
+    Multiple times throughout this process we encountered a decision point
     where we could remain faithful to generating organic lines from the HMM
     model or `cheat' by forcing the HMM to do a certain thing that we wanted it
-    to do. Throughout this project we tried to err on the side of letting the 
+    to do. Throughout this project we tried to err on the side of letting the
     HMM do things by itself in order to increase the variety and authenticity
     of the lines we generated, instead of writing something that simply copied
     Shakespeare with minor variations and rearrangements. \\
@@ -315,34 +315,127 @@
 
 
     \item \boldline{Challenges} \\
-    
-    One of the biggest weaknesses with our current model design is that we 
+
+    One of the biggest weaknesses with our current model design is that we
     don't have any sort of continuity between lines. Because of how we broke
-    the sonnets into sequences at the line level, each sequence ends with a 
+    the sonnets into sequences at the line level, each sequence ends with a
     line break token, so there is no way to pass the state of the previous
     line on to the next line. This design choice was made in order to model
     the end of lines more accurately, as described above. But is has the trade
     off of disrupting the continuity of the poem. We couldn't come up with a
     design solution that allowed us to enjoy both of these benefits simultaneously,
-    but it was definitely the biggest compromise we had to make throughout the 
+    but it was definitely the biggest compromise we had to make throughout the
     process. If we continued to work on the project this would be one of the
-    first things that we would fix. 
+    first things that we would fix.
 
     \item \boldline{Concluding Remarks} \\
-    
+
     Our model is able to generate 14-line sonnets with 10-syllable lines that
     follow the ABABCDCDEFEFGG rhyme scheme of a sonnet. Each line is generated
     organically by an HMM, using no manipulation to get it into the correct
     form. Individual lines are pieced together to fit the rhyme scheme and
     poem length, but each rhyming word was generated organically by the HMM
     with no seeding involved. Meter and part-of-speech transitioning were
-    both left to the HMM to model, and as demonstrated in the visualization 
+    both left to the HMM to model, and as demonstrated in the visualization
     section the model is clearly attempting to represent these sonnet
-    characteristics accurately. On the whole, we were very satisfied with 
+    characteristics accurately. On the whole, we were very satisfied with
     how this project went.
 \end{itemize}
 
-Poem Progression:
 
-%TODO ADD POEMS
+
+\section{Addendum: Poem Progression}
+\medskip
+\begin{itemize}
+
+
+
+    \item \boldline{Early poem without syllable counting or rhyming.} \\
+
+
+
+\begin{lstlisting}
+Knowing short more
+ In breast, out dear and in dear
+ That thy wrongs never heart grows imperfect
+ What's do lov'st virtue, me time,
+ And sake? maladies of and mock forgive me, thought Whilst oft /
+ heaven heart in I my precious else thought And though on anew, love I the
+ Which to neglect and scythe of more say than so must anon this /
+ any the home O ignorance. and I spurring their for would I be none, his
+ Proving husband oft refigured intermixed'? that but
+
+ hour, sorrows fresh my should dross; the the so, love first /
+ them to thy form knows Our
+ Then loving in I single
+ No silence shore, grow.
+\end{lstlisting}
+
+\item \boldline{Poem, now with 10 syllables per line} \\
+
+
+
+\begin{lstlisting}
+moan hath why am windy alter high have
+hear fair a in wonder the thee i lives
+my what which assure what haply done shown
+not thy to if wrinkles meet of beauty
+to that low had stay some when palate if
+bosoms goes hopes thy nurseth married and
+glass self dead her must why new thou whether
+a be longer love and my great love in
+all thee that in acquainted delight his
+lights but wrong sealed while greet belongs travels
+but hearts mock my growth if in broke untrue
+that memory thou soul niggarding my
+side even come even speed and lest lives
+passed face looks music the on yet victors
+\end{lstlisting}
+
+\item \boldline{Poem with 10 syllables and correct rhyme scheme} \\
+
+
+
+
+\begin{lstlisting}
+giving my with sake twice breathe i toiled me
+five buried that kingly her up i at
+note the showing thinking clouds constancy
+treasure great a my be do youth of that
+rage thou silent moment for more need thy
+glass the do the of with my bent more when
+beautys lawful sharpened love the thy by
+but of him the lose giving did my in
+i and walks thy but owe bar flourish the
+and i sea break in slave you and her be
+endless thy sweet self despair wills busy
+picture burthens each though leaped not richly
+weed true win hath since bloody such can me
+blind natures whereof decay every
+\end{lstlisting}
+
+\item \boldline{Poem generated by model with 50 hidden states} \\
+
+
+
+\begin{lstlisting}
+rich heavenly methinks to art which are
+health themselves hearts deeds of a thou teach my
+heart from others all despised you pleasure
+minds need in his equipage still by
+sweetest your have a hand to conspire
+would in vipers fire then eyes blood to
+over though i were winds of their lays her
+to in my thing depends in seldom a
+and i starve i gazed write face each thou view
+cunningly the better proud bad speak my
+and bush league one in let my change and to
+see delight care three shine birth and whilst thy
+when mine canst fear seems one my love that i
+loving his thou world from me to price fly
+\end{lstlisting}
+
+\end{itemize}
+
+
 \end{document}
