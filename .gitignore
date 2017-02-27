@@ -7,5 +7,6 @@
 *.log
 *.out
 *.pdf
+*.gz
 *.DS_Store
 Miniproject-2/progressions/
