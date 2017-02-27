@@ -24,33 +24,68 @@ for line in line_list:
 
 ints_list = map(lambda line: map(lambda word: word_to_int_map[word], line), line_list)
 
-model = HMM.unsupervised_HMM(ints_list, NUM_STATES, 20)
-
-model_file = open('model_file', 'w')
-
-pickle.dump(model, model_file)
-
-model_file.close()
+# model = HMM.unsupervised_HMM(ints_list, NUM_STATES, 20)
+#
+# model_file = open('model_file', 'w')
+#
+# pickle.dump(model, model_file)
+#
+# model_file.close()
 
 model_file = open('model_file', 'r')
 
 model = pickle.load(model_file)
 
 
+state_list = []
+best_observations_by_state = [[] for _ in range(NUM_STATES)]
+
 for state in range(NUM_STATES):
     print "State Number %d" % state
     generations = [(prob, int_to_word_map[i]) for i, prob in enumerate(model.O[state])]
 
     generations.sort(reverse=True)
+    best_observations_by_state[state] = [tup[1] for tup in generations[:20]]
 
     meter_dict = {i : 0 for i in range(6)}
 
     for prob, word in generations:
         meter_dict[word_tools.classify_meter(word)] += prob
 
-    print meter_dict
+    state_list.append(meter_dict)
+
+for idx in range(20):
+    print "%s & %s & %s & %s & %s & %s \\\\" % tuple([best_observations_by_state[state][idx] for state in range(6)])
+
+meter_to_best_state_dict = {i : 0 for i in range(6)}
+
+for i, curr_meter_dict in enumerate(state_list):
+    for meter_type in range(6):
+        if curr_meter_dict[meter_type] > state_list[meter_to_best_state_dict[meter_type]][meter_type]:
+            meter_to_best_state_dict[meter_type] = i
 
 
+for i in range(6):
+    print i, state_list[meter_to_best_state_dict[i]]
+
+
+print meter_to_best_state_dict
+
+for i in range(6):
+    total = 0
+    for j in range(6):
+        total += model.A[meter_to_best_state_dict[i]][meter_to_best_state_dict[j]]
+    for j in range(6):
+        print i, j, model.A[meter_to_best_state_dict[i]][meter_to_best_state_dict[j]] / total
+
+
+
+
+
+
+
+
+quit()
 
 # {0: 0.7027706996096987, 1: 0.03880269651324091, 2: 0.009870012579427804, 3: 0.10334483759635886, 4: 0.013224526658710456, 5: 0.13198722704254212}
 
