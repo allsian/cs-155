@@ -349,13 +349,18 @@ class HiddenMarkovModel:
         while True:
 
             created_line = self.generate_sonnet_line(int_to_word_map)
-            print map(lambda integer: int_to_word_map[integer], created_line)
+
+            #print map(lambda integer: int_to_word_map[integer], created_line)
 
             for old_line in lines_list:
 
-                if word_tools.rhymes_with(int_to_word_map[created_line[-2]], int_to_word_map[old_line[-2]]):
+                #print int_to_word_map[created_line[-2]], int_to_word_map[old_line[-2]]
 
+                if word_tools.rhymes_with(int_to_word_map[created_line[-2]], int_to_word_map[old_line[-2]]):
+                    #print "rhymed"
                     return created_line, old_line
+
+            lines_list.append(created_line)
 
 
 
