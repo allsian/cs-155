@@ -26,8 +26,8 @@ def get_number_syllables(word):
 
         return count
 
-def get_number_syllables_in_pronunciation(pronounciation):
-    return len([phoneme for phoneme in pronounciation if phoneme[-1] in '012'])
+def get_number_syllables_in_pronunciation(pronunciation):
+    return len([phoneme for phoneme in pronunciation if phoneme[-1] in '012'])
 
 
 
@@ -40,9 +40,9 @@ def rhymes_with(word1, word2):
     if word1 not in pronounce_dict or word2 not in pronounce_dict:
         return False
 
-    return any(rhyming_pronounciations(p1, p2) for p1 in pronounce_dict[word1] for p2 in pronounce_dict[word2])
+    return any(rhyming_pronunciations(p1, p2) for p1 in pronounce_dict[word1] for p2 in pronounce_dict[word2])
 
-def rhyming_pronounciations(phoneme_list1, phoneme_list2):
+def rhyming_pronunciations(phoneme_list1, phoneme_list2):
 
     # print phoneme_list1, phoneme_list2
 
@@ -78,3 +78,60 @@ assert rhymes_with("quality", "astronomy")
 assert rhymes_with("abuse", "use")
 assert rhymes_with("husbandry", "posterity")
 assert rhymes_with("quality", "astronomy")
+
+
+ONE_SYLLABLE = 0
+EVEN_SYLLABLE_IAMB = 1
+ODD_SYLLABLE_IAMB = 2
+EVEN_SYLLABLE_TROCHEE = 3
+ODD_SYLLABLE_TROCHEE = 4
+UNIDENTIFIED = 5
+
+def classify_meter(word):
+
+    num_syllables = get_number_syllables(word)
+
+    if num_syllables == 1:
+        return ONE_SYLLABLE
+
+    elif num_syllables % 2 == 0:
+
+        if word in pronounce_dict:
+            pronunciation = pronounce_dict[word][0]
+
+            vowels = [phoneme for phoneme in pronunciation if phoneme[-1] in '012']
+
+            emphases = [int(v[-1]) for v in vowels]
+
+            if emphases[0] == 0:
+                return EVEN_SYLLABLE_IAMB
+            if emphases[0] >= 1:
+                return EVEN_SYLLABLE_TROCHEE
+
+    elif num_syllables % 2 == 1:
+
+        if word in pronounce_dict:
+            pronunciation = pronounce_dict[word][0]
+
+            vowels = [phoneme for phoneme in pronunciation if phoneme[-1] in '012']
+
+            emphases = [int(v[-1]) for v in vowels]
+
+            if emphases[0] == 0:
+                return ODD_SYLLABLE_IAMB
+            if emphases[0] >= 1:
+                return ODD_SYLLABLE_TROCHEE
+    return UNIDENTIFIED
+
+
+assert classify_meter("hello") == EVEN_SYLLABLE_IAMB
+assert classify_meter("ape") == ONE_SYLLABLE
+assert classify_meter("mouse") == ONE_SYLLABLE
+assert classify_meter("estuary") == EVEN_SYLLABLE_TROCHEE
+assert classify_meter("estuary") == EVEN_SYLLABLE_TROCHEE
+assert classify_meter("situate") == ODD_SYLLABLE_TROCHEE
+assert classify_meter("tidal") == EVEN_SYLLABLE_TROCHEE
+assert classify_meter("distract") == EVEN_SYLLABLE_IAMB
+assert classify_meter("distracted") == ODD_SYLLABLE_IAMB
+assert classify_meter("\n") == UNIDENTIFIED
+#assert classify_meter("contracted") == ODD_SYLLABLE_IAMB

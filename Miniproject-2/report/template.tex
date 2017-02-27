@@ -68,29 +68,48 @@
 \medskip
 \begin{itemize}
 
-    What packages did you use for the algorithm?
-    What decisions did you have to make when running the algorithm and what did you try? e.g number of states
-    How did this affect the sonnets that were generated
 
-    \item \boldline{Data processing and manipulation}
+
+
+
+    \item \boldline{What packages did you use for the algorithm?}
     \begin{itemize}
-    % Insert text here. Bullet points can be made using '\item'.
-    \item \textbf{Bullet:} Bullet text.
+    \item \textbf{Baum Welch Algorithm:} We used the TA's implementation of the Baum-Welch Algorithm given out in the homework 5 solution set. We decided on using this implementation because we were already familiar with it from completing problem set 5. Furthermore, it was useful to have a file which we could directly modify, to include new methods for the HMM generator specifically designed to create sonnets.
+
+    \item \textbf{nltk library:} We used the Natural Language Toolkit module, specifically, we used the Carnegie Mellon Pronouncing Dictionary utility of this module. We used this so that we could determine which words rhymed with other words, so that we could ensure our sonnets had the correct number of syllables per line, and that they mimicked the rhyme scheme Shakepeare typically used.
     \end{itemize}
 
-    \item \boldline{Details of models and techniques}
+    \item \boldline{What decisions did you have to make when running the algorithm and what did you try? e.g number of states}
     \begin{itemize}
     % Insert text here. Bullet points can be made using '\item'.
-    \item \textbf{Bullet:} Bullet text.
+    \item \textbf{80 hidden states 1000 Baum Welch Iterations:} When we initially ran the Baum-Welch algorithm to train our model, we decided that an appropriate number of hidden states would be 80. We reasoned that there are about 10 possible parts of speech and about 10 possible metrical feet to the words in Shakespeare, so we reasoned that with 80 hidden states, each hidden state could represent both the part of speech and metrical foot of a given word. However, when we ran this algorithm, we discovered it was computationally infeasible, as it took too much time to iterate through the Baum-Welch training algorithm.
 
-    % If you would like to insert a figure, you can just use the following five lines, replacing the image path with your own and the caption with a 1-2 sentence description of what the image is and how it is relevant or useful.
-    \begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{smiley.png}
-    \caption{Insert caption here.}
-    \end{figure}
+    \item \textbf{5 hidden states 20 Baum Welch Iterations:} We then dropped down to 5 hidden states and 20 Baum-Welch iterations. While this ran in a resonable time, we found that the poems produced by this HMM were extremely incoherent.
+
+    \item \textbf{30 hidden states 20 Baum Welch Iterations:} We increased the number of hidden states to 30. We reasoned that it might be possible to think of the parts of speech as 8 different parts of speech, since some parts of speech are very syntactically similar, and we could consider 4 types of meters for words:
+    even syllables with the first syllable emphasized,
+    even syllables with the first syllable unemphasized,
+    odd syllables with the first syllable emphasized,
+    and odd syllables with the first syllable unemphasized. Putting these considerations together, we reasoned we might only need 30 hidden states to model the foot and part of speech of the words.
+
+    \item \textbf{50 hidden states 20 Baum Welch Iterations:} We increased the number of hidden states to 50 for our final peoms, since we reasoned that adding a few more states was worth the extra computation time, and that it might make our model more flexible.
 
     \end{itemize}
+
+    \item \boldline{How did this affect the sonnets that were generated}
+    \begin{itemize}
+    % Insert text here. Bullet points can be made using '\item'.
+    \item \textbf{5 hidden states:}
+        Our HMM with 5 hidden states produced a sonnet that was poorly structured. The lines contained long strings of words from parts of speech that did not flow together.
+
+    \item \textbf{30 hidden states:}
+        Our HMM with 30 hidden states produced a better sonnet. The lines had word pairs that were more likely to make sense next to each other, and occasionally word pairs that were consistent with alternating emphasis.
+
+    \item \textbf{30 hidden states:}
+        Our HMM with 50 hidden states produced even better sonnets. The word pairs that were much more likely to make sense, and there were even occasional lines that were in true iambic pentameter.
+
+    \end{itemize}
+
 
 \end{itemize}
 
