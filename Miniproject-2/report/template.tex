@@ -37,7 +37,11 @@
     OneHotTeam
 
     \item \boldline{Division of labour} \\
-    We both pair coded all the implementation, and discussed our approach together.
+    We discussed all the design choices together and pair coded the entire 
+    implementation.
+
+    \item \boldline{Repository} \\
+    github.com/davidcinglis/cs-155 (private, email dinglis@caltech.edu for access)
 
 \end{itemize}
 
@@ -49,6 +53,7 @@
 
 
     \item \boldline{What methods did you use and try to tokenize the sonnets?}
+
     We started with some initial preprocessing on the input. We replaced hypens with
     spaces, removed all remaining punctuation, and made everything lowercase.
     We did this to provide consistent observation input to the HMM, since we didn't
@@ -70,7 +75,8 @@
     which words commonly ended lines, resulting in a more faithful poem output.
 
 
-    \item \boldline{Did you have to make changes to the way you tokenized after running the algorithm and seeing the results?}
+    \item \boldline{Did you have to make changes to the way you tokenized after 
+    the initial algorithm results?}
 
     We did. As mentioned above we went through three separate stages. In the first
     stage, we treated every sonnet as a sequence and kept line breaks in as tokens.
@@ -100,7 +106,7 @@
 
     \begin{itemize}
     % Insert text here. Bullet points can be made using '\item'.
-    \item \textbf{80 hidden states 1000 Baum Welch Iterations:} When we initially ran the Baum-Welch algorithm to train our model, we decided that an appropriate number of hidden states would be 80. We reasoned that there are about 10 possible parts of speech and about 10 possible metrical feet to the words in Shakespeare, so we reasoned that with 80 hidden states, each hidden state could represent both the part of speech and metrical foot of a given word. However, when we ran this algorithm, we discovered it was computationally infeasible, as it took too much time to iterate through the Baum-Welch training algorithm.
+    \item \textbf{80 hidden states 1000 Baum Welch Iterations:} When we initially ran the Baum-Welch algorithm to train our model, we decided that an appropriate number of hidden states would be 80. We reasoned that there are about 10 possible parts of speech and about 8 possible metrical feet to the words in Shakespeare, so we reasoned that with 80 hidden states, each hidden state could represent both the part of speech and metrical foot of a given word. However, when we ran this algorithm, we discovered it was computationally infeasible, as it took too much time to iterate through the Baum-Welch training algorithm.
 
     \item \textbf{5 hidden states 20 Baum Welch Iterations:} We then dropped down to 5 hidden states and 20 Baum-Welch iterations. While this ran in a resonable time, we found that the poems produced by this HMM were extremely incoherent.
 
@@ -110,7 +116,7 @@
     odd syllables with the first syllable emphasized,
     and odd syllables with the first syllable unemphasized. Putting these considerations together, we reasoned we might only need 30 hidden states to model the foot and part of speech of the words.
 
-    \item \textbf{50 hidden states 20 Baum Welch Iterations:} We increased the number of hidden states to 50 for our final peoms, since we reasoned that adding a few more states was worth the extra computation time, and that it might make our model more flexible.
+    \item \textbf{50 hidden states 20 Baum Welch Iterations:} We increased the number of hidden states to 50 for our final poems, since we reasoned that adding a few more states was worth the extra computation time, and that it might make our model more flexible.
 
     \end{itemize}
 
@@ -140,19 +146,19 @@
 
 
     \item \boldline{How did you generate your poem?} \\
-    First we trained an HMM on both the Spenser and Shakespeare data using 50
-    hidden states, with the tokenization methods described above. Then we generated
-    lines by starting from a random initial state, and transition through states
+    First we train an HMM on both the Spenser and Shakespeare data using 50
+    hidden states, with the tokenization methods described above. Then we generate
+    lines by starting from a random initial state and transitioning through states
     probabilistically using the transition matrix. At each state along the way we
-    generated an observation probabilistically using the observation matrix. We
-    continued transitioning until we emitted a line break token. At this point
-    we checked if the line generated had 10 syllables, throwing it out and starting
-    over if it did not.
+    generate an observation probabilistically using the observation matrix. We
+    continue transitioning until we emit a line break token. At this point
+    we check if the line generated has 10 syllables, throwing it out and starting
+    over if it does not.
 
-    Once we successfully generated a line, we put it in a list of output lines.
-    To get rhyming lines, we checked every output line against our list of generated
-    lines to see if they rhymed. on finding a successful rhyming pair, we added them
-    to the final poem. Once we had seven rhyming pairs, we arranged them into the
+    Once we successfully generate a line, we put it in a list of output lines.
+    To get rhyming lines, we check every output line against our list of generated
+    lines to see if they rhyme. On finding a successful rhyming pair, we add them
+    to the final poem. Once we have seven rhyming pairs, we arrange them into the
     appropriate rhyme scheme to form our final poem.
 
     \item \boldline{How did you get your poem to look as much like a sonnet as possible?} \\
@@ -163,7 +169,20 @@
     \item \boldline{What makes sense/what doesn't about the sonnets generated?} \\
     Our sonnets make sense in that they follow the rhyme scheme, line length,
     and line count of a traditional sonnet. They definitely do not follow
-    iambic pentameter strictly,
+    iambic pentameter strictly, but as we'll talk about below the HMM is definitely
+    making an attempt to model meter correctly, and the appropriate transitions
+    between different metric states can be observed in the model learned.
+
+    Finally, on to the content of our poem, which can be modeled as transitions
+    between different types of parts of speech. We did not perform a state analysis
+    on parts of speech type, but anecdotally we noticed that fewer nonsensical
+    transitions occurred as we increased the number of hidden states and EM
+    iterations. For instance, at lower values we would commonly see many
+    consecutive one syllable conjunctions/articles, but as we increased the complexity of
+    our model these became more interspersed with nouns, verbs, and adjectives
+    in reasonable places. Unfortunately, our final poem submission, included
+    below, is still far from understandable English, which is a testament to
+    the difficulty of the problem of modeling language. 
 
 \end{itemize}
 
@@ -176,16 +195,46 @@
 
     \item \boldline{Analysis of five states} \\
 
-    We chose to analyze our states in terms of metrical foot. We distinguished 5 kinds of metrical foot for words: words with one syllable,
-    words with an even number syllables with the first two syllables forming an iamb,
-    words with an odd number syllables starting with an iamb,
-    words with an even number syllables starting with a trochee,
-    words with an odd number syllables starting with a trochee. For each of these kinds of metrical foot we found the state which had the highest total generation probability for words of that foot. We also looked at the state which most often produced a newline.
+    We chose to analyze our states in terms of metrical foot. We distinguished 5 kinds of metrical feet for words: 
 
-    We created a flow chart showing the most common normalized transitions from thes states to each other
-    % TODO Insert flowchart
+    \begin{itemize}
 
-    We also listed the 20 most common words for each of these states. As you can see despite these states being highly correlated with certain metrical feet, they still are most likely to generate common words.
+    \item Words with one syllable
+    
+    \item Words with an even number syllables starting with an iabm
+    
+    \item Words with an odd number syllables starting with an iamb
+    
+    \item Words with an even number syllables starting with a trochee
+
+    \item Words with an odd number syllables starting with a trochee 
+    \end{itemize}
+
+    For each of these kinds of metrical foot we found the state which had the highest total generation probability for words of that foot. We also looked at the state which most often produced a newline.
+
+    We created a flow chart showing the most common normalized transitions from these states to each other
+
+    \includegraphics[scale=0.5]{transitions.png}
+
+    One syllable words are not that interesting because they can be either stressed
+    or unstressed in the meter. For even syllable iambs we see that they almost always
+    transition to another even syllable iamb or a line break, which fits in with
+    iambic meter. Odd syllable iambs most commonly transition to trochees, which
+    again makes sense. Even syllable trochees tend to transition to one syllable 
+    words, which is fine since one syllable words can be stressed or unstressed.
+    Odd syllable trochees most commonly transition to iambs, which fits the meter,
+    but they also transition a fair amount to trochees, which isn't incorrect
+    (the model is certainly not perfect). Other than that one outlying case though,
+    there is clearly strong evidence that the HMM is capable of learning the
+    meter present in the sonnets. \\
+
+    We also listed the 20 most common words for each of these states. As you can see despite these states being highly correlated with certain metrical feet, they still are most likely to generate common words. This is likely due to
+    the fact that there is less variety in the English language among articles
+    and prepositions, which tend to have one syllable, than among nouns and
+    verbs, which are more likely to have multiple syllables (and thus be able
+    to be classified as an iamb or trochee). In summary, the trends described
+    above will be difficult to identify by looking at the top 20 most likely words
+    for each state because of how the input data is distributed.
 
 \begin{tabular}{|c|c|c|c|c|c|}
     \hline
@@ -241,20 +290,59 @@
 \medskip
 \begin{itemize}
 
-    \item \boldline{Discoveries} \\
+    \item \boldline{Observations} \\
 
-        How was the work divided up?
-What are your conclusions/observations about the models you used and the sonnets generated?
+    Multiple times throughout this process we encountered a decision point 
+    where we could remain faithful to generating organic lines from the HMM
+    model or `cheat' by forcing the HMM to do a certain thing that we wanted it
+    to do. Throughout this project we tried to err on the side of letting the 
+    HMM do things by itself in order to increase the variety and authenticity
+    of the lines we generated, instead of writing something that simply copied
+    Shakespeare with minor variations and rearrangements. \\
 
-    % Insert text here.
+    For example, in our initial implementation we achieved 10-syllable lines
+    by counting the number of syllables after each emission and halting when
+    the number of syllables equalled 10. If we exceeded 10, we would remove
+    the last word and keep generating words until we hit 10 syllables exactly.
+    This was bad not only because it biased the lines towards ones ending in
+    one or two syllable words, but also because we were artificially ending
+    the line instead of allowing the HMM to observe a transition to a line break
+    and generate that transition organically. We were able to achieve these by
+    adding line break tokens to our input sequences, and generating lines by
+    iterating until the HMM output a line break token. We noticed a markable
+    increase in the quality of our lines after this change, with far more
+    nouns at the end of lines instead of conjunctions or articles.
+
 
     \item \boldline{Challenges} \\
-    % Insert text here.
+    
+    One of the biggest weaknesses with our current model design is that we 
+    don't have any sort of continuity between lines. Because of how we broke
+    the sonnets into sequences at the line level, each sequence ends with a 
+    line break token, so there is no way to pass the state of the previous
+    line on to the next line. This design choice was made in order to model
+    the end of lines more accurately, as described above. But is has the trade
+    off of disrupting the continuity of the poem. We couldn't come up with a
+    design solution that allowed us to enjoy both of these benefits simultaneously,
+    but it was definitely the biggest compromise we had to make throughout the 
+    process. If we continued to work on the project this would be one of the
+    first things that we would fix. 
 
     \item \boldline{Concluding Remarks} \\
-    % Insert text here.
-
+    
+    Our model is able to generate 14-line sonnets with 10-syllable lines that
+    follow the ABABCDCDEFEFGG rhyme scheme of a sonnet. Each line is generated
+    organically by an HMM, using no manipulation to get it into the correct
+    form. Individual lines are pieced together to fit the rhyme scheme and
+    poem length, but each rhyming word was generated organically by the HMM
+    with no seeding involved. Meter and part-of-speech transitioning were
+    both left to the HMM to model, and as demonstrated in the visualization 
+    section the model is clearly attempting to represent these sonnet
+    characteristics accurately. On the whole, we were very satisfied with 
+    how this project went.
 \end{itemize}
 
+Poem Progression:
 
+%TODO ADD POEMS
 \end{document}
