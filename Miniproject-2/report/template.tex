@@ -174,44 +174,46 @@
 \begin{itemize}
 
 
-    \item \boldline{Discoveries} \\
+    \item \boldline{Analysis of five states} \\
 
-        For at least 5 hidden states give a list of the top 10 words that associate with this hidden state and
-state any common features these groups.
-What are some properties of the different hidden states?
-e.g. Correlation between hidden states and syllable counts, connotations of words, etc.
-Make a visual representation of the correlation between states and words
-    % Insert text here.
+    We chose to analyze our states in terms of metrical foot. We distinguished 5 kinds of metrical foot for words: words with one syllable,
+    words with an even number syllables with the first two syllables forming an iamb,
+    words with an odd number syllables starting with an iamb,
+    words with an even number syllables starting with a trochee,
+    words with an odd number syllables starting with a trochee. For each of these kinds of metrical foot we found the state which had the highest total generation probability for words of that foot. We also looked at the state which most often produced a newline.
 
-\begin{tabular}[|c|c|c|c|c|c|]
-    so & that & NEWLINE & be & my & i \\
-    to & the & part & thee & the & thou \\
-    i & in & eyes & me & thy & my \\
-    or & then & not & love & in & that \\
-    as & all & seen & will & to & the \\
-    who & for & spent & away & do & thy \\
-    for & yet & place & sight & so & he \\
-    why & by & doth & night & his & they \\
-    they & which & did & mind & your & all \\
-    making & having & may & pride & it & with \\
-    with & if & woe & face & is & her \\
-    the & look & like & make & every & you \\
-    it & how & sight & see & can & in \\
-    how & so & away & heart & not & on \\
-    what & you & desire & NEWLINE & most & many \\
-    since & she & stay & fair & doth & love \\
-    nor & when & new & end & sweet & every \\
-    sweet & sweet & still & days & that & such \\
-    mad & nothing & friend & dead & by & ye \\
-    then & what & up & find & will & which \\
+    We created a flow chart showing the most common normalized transitions from thes states to each other
+    % TODO Insert flowchart
+
+    We also listed the 20 most common words for each of these states. As you can see despite these states being highly correlated with certain metrical feet, they still are most likely to generate common words.
+
+\begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    One Syllable & Even Iamb & Odd Iamb & Odd Trochee & Even Trochee \\
+    \hline
+    so & that & NEWLINE & be & my \\
+    to & the & part & thee & the \\
+    i & in & eyes & me & thy \\
+    or & then & not & love & in \\
+    as & all & seen & will & to \\
+    who & for & spent & away & do \\
+    for & yet & place & sight & so \\
+    why & by & doth & night & his \\
+    they & which & did & mind & your \\
+    making & having & may & pride & it \\
+    with & if & woe & face & is \\
+    the & look & like & make & every \\
+    it & how & sight & see & can \\
+    how & so & away & heart & not \\
+    what & you & desire & NEWLINE & most \\
+    since & she & stay & fair & doth \\
+    nor & when & new & end & sweet \\
+    sweet & sweet & still & days & that \\
+    mad & nothing & friend & dead & by \\
+    then & what & up & find & will \\
+    \hline
 \end{tabular}
 
-
-    \item \boldline{Challenges} \\
-    % Insert text here.
-
-    \item \boldline{Concluding Remarks} \\
-    % Insert text here.
 
 \end{itemize}
 
@@ -221,16 +223,15 @@ Make a visual representation of the correlation between states and words
 \begin{itemize}
 
 
-    \item \boldline{Discoveries} \\
+    \item \boldline{Rhyme} \\
 
-        e.g. rhyme/meter
-    % Insert text here.
+        We wrote a special function to determine if two words rhymed or did not rhyme. To do this, we used the CMU rhyming dictionary utility to break words down into individual phonemes. We then checked to make sure the last vowel sound in both words was the same, and that all consonant sounds that came after that sound were identical. If a pair of words passed this test (for any combination of pronunciations listed by the CMU dictionary) we specified that they rhymed. After using this rhyming helper to generate sonnets, we noticed some multi-syllable words with a shared suffix, such as 'breaking' and 'buying', would register as a rhyme, even though they didn't sound right together. We added the additional constraint that the last two vowel sounds of multi-syllable words must be the same for them to rhyme. (We put this function in our file wordtools.py)
 
-    \item \boldline{Challenges} \\
-    % Insert text here.
+    \item \boldline{Meter (Counting syllables)} \\
 
-    \item \boldline{Concluding Remarks} \\
-    % Insert text here.
+        We also wrote a special tool (also in wordtools.py) to determine the number of syllables in a word. This was important for the line generator to be able to produce lines which had a fixed number of syllables. We initially counted the vowel sounds in the CMU dictionary pronunciation of a word to serve as the number of syllables, but we noticed that some of the more antiquated words used by Shakespeare were not present in the CMU dictionary. To work around this, we implemented an edge case where we counted vowel clusters in a word to determine the number of syllables.
+
+
 
 \end{itemize}
 
