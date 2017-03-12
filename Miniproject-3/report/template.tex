@@ -9,8 +9,8 @@
       \large
       Machine Learning \& Data Mining \hfill
       Caltech CS/CNS/EE 155 \hfill \\[1pt]
-      Miniproject 1\hfill
-      Released January $28^{th}$, 2017 \\
+      Miniproject 3\hfill
+      March $11^{th}$, 2017 \\
     }
   }
 }
@@ -92,30 +92,45 @@
 \medskip
 \begin{itemize}
 
-    - What parameters did you adjust and how?
-    - Justify your choices for the parameters and stopping criteria
-    - Did you make any other significant modifications or additions
+    \item \boldline{Overall Implementation Architecture}
+    We used the TA-provided HW6 solution for the matrix factorization portion. Once
+    we had our factored matrix, we used numpy's implementation of single value decomposition
+    to reduce the dimensionality of the data down to 2 dimensions. 
+    
+    \item \boldline{What parameters did you adjust and how?} \\
 
-    \item \boldline{Data processing and manipulation}
     \begin{itemize}
-    % Insert text here. Bullet points can be made using '\item'.
-    \item \textbf{Bullet:} Bullet text.
+    \item \textbf{Stopping Criteria:} The default TA implementation of matrix factorization performs stochastic 
+    gradient descent until the difference in mean-squared error between two 
+    consecutive epochs is less than some $\epsilon$ fraction of the initial
+    decrease in error from the start state to the first epoch. We experimented
+    with varying values for this epsilon, ranging from $10e-4$ by several factors of
+    $10$ in either direction, but found that unless we chose a very
+    large $\epsilon$ the model converged to pretty much the same thing every time,
+    so it didn't really matter what we chose. Using the default value, $\epsilon = 10e-4$,
+    there was not much variation in results from run to run, so we decided to stick
+    with that.
+
+    \item \textbf{Step Size:} The step size shouldn't really affect what the
+    gradient descent converges to, unless it is so big that it causes the descent
+    to oscillate and diverge. The only disadvantage to choosing a very small 
+    $\eta$ is that the SGD procedure will take longer to converge. We chose
+    $\eta = 0.03$ which converged in a reasonable number of iterations, while
+    providing the same level of accuracy as smaller $\eta$ values.
+
+    \item \textbf{Regularization Parameter:} This was the value we experimented
+    the most with. A larger $\lambda$ value will regularize the data more and bias
+    the output matrices towards simpler models, while a lower $\lambda$ value leads
+    to a more complex, unconstrained solution. We experimented with the following
+    $\lambda$ values: $0$, $0.001$, $0.01$, $0.1$, and $1$. For the same set of
+    movies, $\lambda = 0.001$ provided the most easily interpreted results, so
+    we chose to use that $\lambda$ value.
     \end{itemize}
 
-    \item \boldline{Details of models and techniques}
-    \begin{itemize}
-    % Insert text here. Bullet points can be made using '\item'.
-    \item \textbf{Bullet:} Bullet text.
+    \item \boldline{Did you make any other significant modifications or additions?} \\
 
-    % If you would like to insert a figure, you can just use the following five lines, replacing the image path with your own and the caption with a 1-2 sentence description of what the image is and how it is relevant or useful.
-    \begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{smiley.png}
-    \caption{Insert caption here.}
-    \end{figure}
-
-    \end{itemize}
-
+    Besides the parameter tuning mentioned above we stuck to the stock TA and numpy
+    implementations of matrix factorization and single value decomposition.
 \end{itemize}
 
 
@@ -124,17 +139,17 @@
 \medskip
 \begin{itemize}
 
-    - What did you observe?
-    - How do the ratings of the best movies compare to those of the most popular movies
-    - How do the ratings of the three genres you chose compare to one another
-    - What was expected and what was surprising from the visualizations?
-    - Any other comparisons/observations
-
-    \item \boldline{Scoring} \\
+    \item \boldline{What did you observe?} \\
     % Insert text here.
 
-    \item \boldline{Validation and Test} \\
+    \item \boldline{How do the ratings of the best movies compare to those of the most popular movies?} \\
     % Insert text here.
+
+    \item \boldline{How do the ratings of the three genres you chose compare to one another?} \\
+
+    \item \boldline{What was expected and what was surprising from the visualizations?} \\
+
+    \item \boldline{Any other comparisons/observations?} \\
 
 \end{itemize}
 
@@ -144,16 +159,10 @@
 \medskip
 \begin{itemize}
 
-    - Briefly summarize your main observations
-    - Did your visualizations help you to better understand the MovieLens dataset?
-
-    \item \boldline{Discoveries} \\
+    \item \boldline{Briefly summarize your main observations} \\
     % Insert text here.
 
-    \item \boldline{Challenges} \\
-    % Insert text here.
-
-    \item \boldline{Concluding Remarks} \\
+    \item \boldline{Did your visualizations help you to better understand the MovieLens dataset?} \\
     % Insert text here.
 
 \end{itemize}
