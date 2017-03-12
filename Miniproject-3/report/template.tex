@@ -26,7 +26,7 @@
 % For help with LaTeX, please feel free to see a TA!
 
 
-
+\pagebreak
 \section{Introduction}
 \medskip
 \begin{itemize}
@@ -43,15 +43,67 @@
 \end{itemize}
 
 
-
+\pagebreak
 \section{Basic Visualizations}
 \medskip
+
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{all_ratings_bar_chart}
+\caption{Visualization of ratings for all movies in the dataset.}
+\end{figure}
+
+
+\pagebreak
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{most-popular}
+\caption{Visualization of ratings for most popular movies in the dataset.}
+\end{figure}
+
+\pagebreak
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{best-rated}
+\caption{Visualization of ratings for best rated movies in the dataset.}
+\end{figure}
+
+\pagebreak
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Crime_ratings_bar_chart}
+\caption{Visualization of ratings for all Crime movies in the dataset.}
+\end{figure}
+
+\pagebreak
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Documentary_ratings_bar_chart}
+\caption{Visualization of ratings for all Documentary movies in the dataset.}
+\end{figure}
+
+
+\pagebreak
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fantasy_ratings_bar_chart}
+\caption{Visualization of ratings for all Fantasy movies in the dataset.}
+\end{figure}
+
 \begin{itemize}
+
 
     \item \boldline{Justify your choice of visualization method}
     \begin{itemize}
     % Insert text here. Bullet points can be made using '\item'. Models and techniques should be bolded using '\textbf{}'.
-    \item \textbf{All ratings in the MovieLens Dataset:} To display all ratings in the MovieLens dataset, we decided it would be best to use a bar chart, with one bar for the number of 1 ratings, one bar for the number of 2 ratings, and so on up to 5. Since the data we needed to show was just the relative number of ratings of each level, we felt that this visualization would be the simplest and most effective
+    \item \textbf{All ratings in the MovieLens Dataset:} To display all ratings in the MovieLens dataset, we decided it would be best to use a bar chart, with one bar for the number of 1 ratings, one bar for the number of 2 ratings, and so on up to 5. Since the data we needed to show was just t\pagebreakhe relative number of ratings of each level, we felt that this visualization would be the simplest and most effective
 
     \item \textbf{All ratings of the ten most popular movies:} To display the most popular movies ratings in the MovieLens dataset, we created a stacked bar chart. We placed the ten most popular movies along the x-axis, and then created a bar for each of these, for which th total height of the bar represented the total number of ratings, and each bar had different portions colored differently to show what proportion of the ratings were 1, what proportion were 2 and so on. We felt that this format allowed the chart to simulataneously convey the total number of ratings for each movie, as well as how positive in general those ratings were.
 
@@ -79,7 +131,7 @@
 \end{itemize}
 
 
-
+\pagebreak
 \section{Matrix Factorization Algorithm}
 \medskip
 \begin{itemize}
@@ -87,16 +139,16 @@
     \item \boldline{Overall Implementation Architecture}
     We used the TA-provided HW6 solution for the matrix factorization portion. Once
     we had our factored matrix, we used numpy's implementation of single value decomposition
-    to reduce the dimensionality of the data down to 2 dimensions. 
-    
+    to reduce the dimensionality of the data down to 2 dimensions.
+
     \item \boldline{What parameters did you adjust and how?} \\
 
     \begin{itemize}
-    \item \textbf{Stopping Criteria:} The default TA implementation of matrix factorization performs stochastic 
-    gradient descent until the difference in mean-squared error between two 
+    \item \textbf{Stopping Criteria:} The default TA implementation of matrix factorization performs stochastic
+    gradient descent until the difference in mean-squared error between two
     consecutive epochs is less than some $\epsilon$ fraction of the initial
     decrease in error from the start state to the first epoch. We experimented
-    with varying values for this epsilon, ranging from $10e-4$ by several factors of
+    with varying val\pagebreakues for this epsilon, ranging from $10e-4$ by several factors of
     $10$ in either direction, but found that unless we chose a very
     large $\epsilon$ the model converged to pretty much the same thing every time,
     so it didn't really matter what we chose. Using the default value, $\epsilon = 10e-4$,
@@ -105,7 +157,7 @@
 
     \item \textbf{Step Size:} The step size shouldn't really affect what the
     gradient descent converges to, unless it is so big that it causes the descent
-    to oscillate and diverge. The only disadvantage to choosing a very small 
+    to oscillate and diverge. The only disadvantage to choosing a very small
     $\eta$ is that the SGD procedure will take longer to converge. We chose
     $\eta = 0.03$ which converged in a reasonable number of iterations, while
     providing the same level of accuracy as smaller $\eta$ values.
@@ -126,9 +178,64 @@
 \end{itemize}
 
 
-
+\pagebreak
 \section{Matrix Factorization Visualization}
 \medskip
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{random_2d_vis}
+\caption{2D visualization of parameters for 10 random movies in the dataset.}
+\end{figure}
+
+
+\pagebreak
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{popular_2d_vis}
+\caption{2D visualization of parameters for 10 most popular movies in the dataset.}
+\end{figure}
+
+
+\pagebreak
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{highest_2d_vis}
+\caption{2D visualization of parameters for 10 best movies in the dataset.}
+\end{figure}
+
+
+
+\pagebreak
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{crime_2d_vis}
+\caption{2D visualization of parameters for 10 crime movies in the dataset.}
+\end{figure}
+
+
+\pagebreak
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{documentaries_2d_vis}
+\caption{2D visualization of parameters for 10 documentary movies in the dataset.}
+\end{figure}
+
+
+\pagebreak
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{fantasy_2d_vis}
+\caption{2D visualization of parameters for 10 fantasy movies in the dataset.}
+\end{figure}
+
+
+
 \begin{itemize}
 
     \item \boldline{What did you observe?} \\
@@ -146,7 +253,7 @@
 \end{itemize}
 
 
-
+\pagebreak
 \section{Conclusion}
 \medskip
 \begin{itemize}
