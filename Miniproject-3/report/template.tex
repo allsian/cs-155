@@ -51,38 +51,30 @@
     \item \boldline{Justify your choice of visualization method}
     \begin{itemize}
     % Insert text here. Bullet points can be made using '\item'. Models and techniques should be bolded using '\textbf{}'.
-    \item \textbf{Bullet:} Bullet text.
+    \item \textbf{All ratings in the MovieLens Dataset:} To display all ratings in the MovieLens dataset, we decided it would be best to use a bar chart, with one bar for the number of 1 ratings, one bar for the number of 2 ratings, and so on up to 5. Since the data we needed to show was just the relative number of ratings of each level, we felt that this visualization would be the simplest and most effective
+
+    \item \textbf{All ratings of the ten most popular movies:} To display the most popular movies ratings in the MovieLens dataset, we created a stacked bar chart. We placed the ten most popular movies along the x-axis, and then created a bar for each of these, for which th total height of the bar represented the total number of ratings, and each bar had different portions colored differently to show what proportion of the ratings were 1, what proportion were 2 and so on. We felt that this format allowed the chart to simulataneously convey the total number of ratings for each movie, as well as how positive in general those ratings were.
+
+    \item \textbf{All ratings of the ten best movies:} To display the best movies ratings in the MovieLens dataset, we created a stacked bar chart. Again, we felt that this format allowed the chart to simulataneously convey the total number of ratings for each movie, as well as how positive in general those ratings were. We also felt it would be good to be able to compare this chart to the most popular movies chart. We also chose to disqualify all movies rated less than 100 times, since it could be possible to have a movie which is generally unliked, but which only a few people rated and which was rated highly by all who rated it.
+
+    \item \textbf{All ratings of movies from three genres of your choice:} To display all ratings for the three specific genres we chose (Crime, Documentary, and Fantasy), we used a bar chart with one bar for each value for the ratings, like we used for the set of all movies. We felt that this would allow us to see how well-liked and also how polarizing genres were with respect to others and with respect to the dataset as a whole.
+
     \end{itemize}
 
-    \item \boldline{What did you observe?}
+    \item \boldline{Observations}
     \begin{itemize}
     % Insert text here. Bullet points can be made using '\item'.
-    \item \textbf{Bullet:} Bullet text.
+    \item \textbf{All ratings in the MovieLens Dataset:} In the bar chart we created for all ratings, we can see a bell-curve shape. The most common rating is 4, and ratings further away from 4 get less and less common. We expected to see this, as we feel that most movies are ok, and there are a few exceptionally good movies, and a few bad movies.
+
+    \item \textbf{All ratings of the ten most popular movies:} In the stacked bar chart for the ratings for the ten most popular movies, we can see that these movies were all rated around 500 times. We can see that these movies were commonly rated 4, except for Star Wars, which was very well-liked, and had a lot of 5 ratings. Overall, we expected the more-often ranked movies to be better rated than we saw, because we thought bad movies probably wouldn't be watched as much. However, 1 ratings were very uncommon, so maybe it is only the very very bad movies which are rarely watched.
+
+    \item \textbf{All ratings of the ten best movies:} In the stacked bar chart for the ratings for the ten most well-liked movies, we can see that these movies were less frequently rated, usually around 200 times. In contrast to the most popular movies, and in accordance with our expecatations, these movies were rated 5 overwhelmingly often.
+
+    \item \textbf{All ratings of movies from three genres of your choice:} In the bar charts for the three specific genres we chose (Crime, Documentary, and Fantasy), we see similar trends to the data as a whole: All three are unimodal. We note that there are fewer Documentaries, but that low ratings for documentaries are very uncommon, indicating that bad documentaries are rare. We also note that the mode of the Fantasy genre rating was 3: It seems that fantasy movies aren't as well-liked.
+
     \end{itemize}
 
-    \item \boldline{Did the results match what you would expect to see?}
-    \begin{itemize}
-    % Insert text here. Bullet points can be made using '\item'.
-    \item \textbf{Bullet:} Bullet text.
-    \end{itemize}
 
-    \item \boldline{How do the ratings of the best movies compare to those of those of the most popular movies}
-    \begin{itemize}
-    % Insert text here. Bullet points can be made using '\item'.
-    \item \textbf{Bullet:} Bullet text.
-    \end{itemize}
-
-    \item \boldline{How do the ratings of the three genres you chose compare to one another}
-    \begin{itemize}
-    % Insert text here. Bullet points can be made using '\item'.
-    \item \textbf{Bullet:} Bullet text.
-    \end{itemize}
-
-    \item \boldline{Any other comparisons/observations}
-    \begin{itemize}
-    % Insert text here. Bullet points can be made using '\item'.
-    \item \textbf{Bullet:} Bullet text.
-    \end{itemize}
 
 \end{itemize}
 
