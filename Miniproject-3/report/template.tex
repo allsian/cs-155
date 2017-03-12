@@ -239,16 +239,59 @@
 \begin{itemize}
 
     \item \boldline{What did you observe?} \\
-    % Insert text here.
+    The goal with these plots is to determine some sort of divisive criteria
+    for the two axes; something that will cause one set of people to give the
+    movie a high rating while causing another set of people to give the movie
+    a low rating. For the vertical axis, our best guess was that a higher Y
+    value corresponded to a more serious/inaccessible movie, like a complicated
+    drama or a historical movie with heavy subject matter. Conversely, a movie
+    with a smaller Y value would be something with simpler, more accessible
+    subject matter, like an animated kids movie, a rom-com, or an action movie.
+
+    This trend is best illustrated in the `Highest Rated Movies' plot. At the top
+    we see 12 Angry Men, a courtroom drama with lots of subtle, character-driven
+    interactions. Also near the top is Schindler's List, with deals with 
+    Holocaust-era Germany, and Citizen Kane, another complex mystery drama.
+    Near the bottom we have A Close Shave, one of the animated Wallace and Grommit
+    movies, and Star Wars, a very accessible action move.
+
+    This trend is far from perfect though. Notice that Sleepless in Seattle,
+    a fairly simple rom-com, has the same accessibility value as Schindler's List,
+    which doesn't make much sense. A Close Shave and The Wrong Trousers have
+    very different accessilibity values, even though they are both Wallace and
+    Grommit movies and should have very similar ratings on both axes.
+
+    We were unable to conclude anything definitive for the X axis. Notice how
+    A Close Shave and The Wrong Trousers are on completely opposite sides of the X
+    axis even though one is basically the sequel of the other. Similarly,
+    some very different pairs have the same X value, like Casablanca and The
+    Wrong Trousers, or The Godfather and The Big Lebowski. It's entirely possible
+    that there is some overlap in audience of people who like both of these
+    movies, but given their difference in subject matter this overlap wasn't
+    apparent to us. 
 
     \item \boldline{How do the ratings of the best movies compare to those of the most popular movies?} \\
-    % Insert text here.
+    The best rated movies had a wider range in Y values, while the most rated
+    movies had a larger range of X values. It's hard to conclude anything too
+    concrete from this. This sort of makes sense if we think of the Y axis as
+    accessibility, because in order for movies to have a lot of ratings they
+    have to be accessible to a lot of people, which narrows the range of possible
+    Y values.
 
     \item \boldline{How do the ratings of the three genres you chose compare to one another?} \\
 
-    \item \boldline{What was expected and what was surprising from the visualizations?} \\
+    All three genres have pretty much the same range of Y values. The crime movies
+    all have very large X values, while the documentaries on average have
+    much lower X values. This was the most significant observation we had for the
+    X values. Perhaps a large X value corresponds to a more exciting, suspenseful
+    movie, while a smaller X value corresponds to a dryer, less emotional movie.
 
-    \item \boldline{Any other comparisons/observations?} \\
+    \item \boldline{What was expected and what was surprising from the visualizations?} \\
+     We were surprised with how difficult it was to draw any concrete conclusions
+    from the plots. We tried a wide range of movie combinations at different $\lambda$
+    values, and no matter what we tried no obvious correlation jumped out at us,
+    even with 100000 input data points. We expected these correlations would be
+    a lot more apparent than they were in reality. 
 
 \end{itemize}
 
